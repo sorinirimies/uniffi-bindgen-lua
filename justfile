@@ -185,6 +185,10 @@ changelog-latest: _check-git-cliff
 
 # ── Version & release ─────────────────────────────────────────────────────────
 
+# Build the published crates from their packages with fresh dependencies, as cargo install does
+fresh-install:
+    nu scripts/ci/fresh_install.nu
+
 # Current version (Cargo.toml)
 version:
     @nu scripts/version.nu

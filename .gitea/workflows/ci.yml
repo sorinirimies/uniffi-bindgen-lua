@@ -42,6 +42,8 @@ jobs:
         run: nu scripts/ci/apt.nu
       - name: Quality gate
         run: nu scripts/ci/quality_gate.nu
+      - name: The published crates build with fresh dependencies (as cargo install does)
+        run: nu scripts/ci/fresh_install.nu
 
   # The uniffi fixture suite and the tour crate: Lua modules built for Lua 5.4
   # and LuaJIT, loaded, and run.

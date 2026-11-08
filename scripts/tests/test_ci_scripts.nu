@@ -4,6 +4,7 @@
 
 use std/assert
 use runner.nu *
+use ../ci/fresh_install.nu [crate_file crate_version]
 use ../ci/deps_update.nu [present commit_message series lock_versions downgrades pins pins_changed next_patch upgrade_message]
 use ../ci/publish_crate.nu [already_published package_args]
 use ../ci/apt.nu [commands]
@@ -229,6 +230,13 @@ def "test deps_update: downgrades lists lowered packages only" [] {
 def "test deps_update: a crate kept at two versions is no downgrade" [] {
     let lock = lock_versions $LOCK
     assert equal (downgrades $lock $lock) []
+}
+
+def "test fresh_install: the packaged crate and its version" [] {
+    assert equal (crate_file "/t" "a-b" "1.2.3") "/t/package/a-b-1.2.3.crate"
+    let metadata = {packages: [{name: "a", version: "1.0.0"} {name: "b", version: "2.0.0"}]}
+    assert equal (crate_version $metadata "b") "2.0.0"
+    assert error { crate_version $metadata "c" }
 }
 
 def main [] { run-tests }
