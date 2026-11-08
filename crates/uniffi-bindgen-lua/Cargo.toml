@@ -1,0 +1,39 @@
+[package]
+name = "uniffi-bindgen-lua"
+description = "Lua bindings generator for UniFFI"
+readme = "../../README.md"
+keywords = ["uniffi", "lua", "bindings", "ffi", "codegen"]
+categories = ["command-line-utilities"]
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[lib]
+name = "uniffi_bindgen_lua"
+path = "src/lib.rs"
+
+[[bin]]
+name = "uniffi-bindgen-lua"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = { workspace = true }
+camino = { workspace = true }
+clap = { workspace = true }
+serde = { workspace = true }
+toml = { workspace = true }
+uniffi_bindgen = { workspace = true }
+
+[package.metadata.docs.rs]
+all-features = true
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+tempfile = { workspace = true }
+insta = { workspace = true }

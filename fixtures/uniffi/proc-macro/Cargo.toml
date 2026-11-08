@@ -1,0 +1,32 @@
+[package]
+name = "uniffi-fixture-proc-macro"
+version = "0.22.0"
+edition = "2018"
+license = "MPL-2.0"
+publish = false
+
+[lib]
+name = "uniffi_proc_macro"
+crate-type = [
+    "lib",
+    "cdylib",
+]
+
+[features]
+default = ["myfeature"]
+myfeature = []
+
+[dependencies]
+thiserror = "2"
+lazy_static = "1.4"
+
+[dependencies.uniffi]
+workspace = true
+features = ["scaffolding-ffi-buffer-fns"]
+
+[build-dependencies.uniffi]
+workspace = true
+features = [
+    "build",
+    "scaffolding-ffi-buffer-fns",
+]

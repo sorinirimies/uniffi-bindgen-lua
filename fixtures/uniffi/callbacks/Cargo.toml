@@ -1,0 +1,24 @@
+[package]
+name = "uniffi-fixture-callbacks"
+version = "0.22.0"
+edition = "2021"
+license = "MPL-2.0"
+publish = false
+
+[lib]
+crate-type = [
+    "lib",
+    "cdylib",
+]
+name = "uniffi_fixture_callbacks"
+
+[dependencies]
+thiserror = "2"
+
+[dependencies.uniffi]
+workspace = true
+features = ["scaffolding-ffi-buffer-fns"]
+
+[build-dependencies.uniffi]
+workspace = true
+features = ["build"]

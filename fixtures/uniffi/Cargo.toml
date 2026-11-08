@@ -1,0 +1,70 @@
+# uniffi-rs v0.32.2 test fixtures and examples (MPL-2.0,
+# https://github.com/mozilla/uniffi-rs/tree/v0.32.2),
+# vendored by scripts/vendor_fixtures.nu to run their tests against the C
+# bindings. Each fixture's `c/test_*.c` ports the upstream test named at
+# its top. Changes from upstream: the test harness and the per-language
+# tests, dev-dependencies, the ffi-trace feature, benches and binaries are
+# removed.
+# Kept from an earlier uniffi-rs version (no longer upstream): keywords/kotlin, keywords/swift, regressions/kotlin-enum-payload-clash, regressions/kotlin-experimental-unsigned-types, regressions/swift-callbacks-omit-labels, regressions/swift-dictionary-nesting.
+[workspace]
+resolver = "2"
+members = [
+    "benchmarks",
+    "callbacks",
+    "coverall",
+    "docstring",
+    "docstring-proc-macro",
+    "enum-types",
+    "error-types",
+    "examples/arithmetic",
+    "examples/arithmetic-procmacro",
+    "examples/async-api-client",
+    "examples/callbacks",
+    "examples/custom-types",
+    "examples/futures",
+    "examples/geometry",
+    "examples/remote-types",
+    "examples/rondpoint",
+    "examples/sprites",
+    "examples/todolist",
+    "examples/traits",
+    "ext-types/custom-types",
+    "ext-types/external-crate",
+    "ext-types/http-headermap",
+    "ext-types/lib",
+    "ext-types/proc-macro-lib",
+    "ext-types/sub-lib",
+    "ext-types/uniffi-one",
+    "futures",
+    "gh-2600",
+    "keywords/kotlin",
+    "keywords/rust",
+    "keywords/swift",
+    "large-enum",
+    "large-error",
+    "mutable-records",
+    "proc-macro",
+    "proc-macro-no-implicit-prelude",
+    "regressions/cdylib-crate-type-dependency/cdylib-dependency",
+    "regressions/cdylib-crate-type-dependency/ffi-crate",
+    "regressions/enum-without-i32-helpers",
+    "regressions/fully-qualified-types",
+    "regressions/kotlin-enum-payload-clash",
+    "regressions/kotlin-experimental-unsigned-types",
+    "regressions/logging-callback-interface",
+    "regressions/missing-newline",
+    "regressions/swift-callbacks-omit-labels",
+    "regressions/swift-dictionary-nesting",
+    "regressions/unary-result-alias",
+    "regressions/wrong-lower-check",
+    "rename",
+    "simple-fns",
+    "simple-iface",
+    "struct-default-values",
+    "trait-methods",
+    "type-limits",
+    "uniffi-fixture-time",
+]
+
+[workspace.dependencies]
+uniffi = "=0.32.2"

@@ -1,0 +1,17 @@
+[advisories]
+yanked = "deny"
+ignore = [
+    # basic-toml is unmaintained; it reaches us through uniffi_bindgen -> askama, which we do not
+    # control. Revisit when uniffi_bindgen moves off askama 0.14.
+    "RUSTSEC-2026-0374",
+]
+
+[licenses]
+allow = ["MIT", "Apache-2.0", "Apache-2.0 WITH LLVM-exception", "BSD-2-Clause", "BSD-3-Clause", "ISC", "Unicode-3.0", "Zlib", "MPL-2.0", "CC0-1.0", "BSL-1.0"]
+
+[bans]
+multiple-versions = "warn"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"

@@ -1,0 +1,18 @@
+[package]
+name = "tour"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# A standalone workspace: the fixture must not inherit the generator's lints.
+[workspace]
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+name = "tour"
+
+[dependencies]
+uniffi = { version = "0.32", features = ["tokio"] }
+tokio = { version = "1", features = ["time", "rt-multi-thread"] }
+thiserror = "2"
+async-trait = "0.1"

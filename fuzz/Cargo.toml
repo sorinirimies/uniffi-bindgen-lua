@@ -1,0 +1,22 @@
+[package]
+name = "uniffi-bindgen-lua-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2024"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+uniffi-bindgen-lua = { path = "../crates/uniffi-bindgen-lua" }
+
+# Not part of the main workspace (needs nightly).
+[workspace]
+
+[[bin]]
+name = "generate_udl"
+path = "fuzz_targets/generate_udl.rs"
+test = false
+doc = false
+bench = false

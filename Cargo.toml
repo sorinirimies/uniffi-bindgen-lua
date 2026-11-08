@@ -1,0 +1,40 @@
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+
+# One version for every crate; `just bump X.Y.Z` edits it (and EXTRA_MANIFESTS).
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.90"
+license = "MIT"
+authors = ["Sorin Albu-Irimies"]
+repository = "https://github.com/sorinirimies/uniffi-bindgen-lua"
+homepage = "https://github.com/sorinirimies/uniffi-bindgen-lua"
+
+[workspace.dependencies]
+# Shared dependency versions live here; crates use `dep = { workspace = true }`.
+anyhow = "1"
+camino = "1"
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+toml = "0.9"
+uniffi_bindgen = "0.32"
+tempfile = "3"
+insta = "1"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_debug_implementations = "warn"
+# `pub` only for what another crate uses; then dead_code finds the rest.
+unreachable_pub = "warn"
+
+[workspace.lints.clippy]
+dbg_macro = "warn"
+todo = "warn"
+unwrap_used = "warn"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true

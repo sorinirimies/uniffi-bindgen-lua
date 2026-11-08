@@ -1,0 +1,23 @@
+[package]
+name = "unary-result-alias"
+version = "0.1.0"
+edition = "2021"
+license = "MPL-2.0"
+publish = false
+
+[lib]
+name = "uniffi_unary_result_alias"
+crate-type = [
+    "lib",
+    "cdylib",
+]
+
+[dependencies]
+thiserror = "2"
+
+[dependencies.uniffi]
+workspace = true
+
+[build-dependencies.uniffi]
+workspace = true
+features = ["build"]
