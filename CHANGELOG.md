@@ -4,6 +4,16 @@ All notable changes to this project are documented here. It is generated from
 [Conventional Commits](https://www.conventionalcommits.org) by
 [git-cliff](https://git-cliff.org) — do not edit it by hand.
 
+## [0.1.2](https://github.com/sorinirimies/uniffi-bindgen-lua/compare/v0.1.1...v0.1.2) — 2026-11-09
+
+### 🐛 Bug fixes
+
+- The modules of one Lua state share one callback dispatcher ([`f82338a`](https://github.com/sorinirimies/uniffi-bindgen-lua/commit/f82338a6ef467acea88b1226b87a0b33daeacfdb))
+
+### 📦 Dependencies
+
+- Nightly cargo update 2026-11-09 ([`9cf2d47`](https://github.com/sorinirimies/uniffi-bindgen-lua/commit/9cf2d479e136f39ef4423b7f673a6cf238446a56))
+
 ## [0.1.1](https://github.com/sorinirimies/uniffi-bindgen-lua/compare/v0.1.0...v0.1.1) — 2026-11-08
 
 ### 🐛 Bug fixes
