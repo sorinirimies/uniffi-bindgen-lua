@@ -77,6 +77,17 @@ fn module_registers_functions_types_and_poll() {
     }
 }
 
+// Regression: each module had its own callback queue, so a Lua program waiting in one
+// component (a client's connect) never ran the callbacks Rust made into another (the
+// broker's auth provider), and both waited (fixtures/runtime/dispatcher.c).
+#[test]
+fn modules_of_one_lua_state_share_the_dispatcher() {
+    let c = generate().source;
+    assert!(c.contains("static uniffi_lua_dispatcher *sample_shared_dispatcher;"));
+    assert!(c.contains("sample_shared_dispatcher = uniffi_lua_shared_dispatcher(L);"));
+    assert!(!c.contains("uniffi_lua_dispatcher_init"));
+}
+
 #[test]
 fn arguments_are_checked_before_any_rust_resource_exists() {
     let c = generate().source;

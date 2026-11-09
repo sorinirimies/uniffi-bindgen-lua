@@ -36,7 +36,7 @@ impl Gen<'_> {
         }
         let _ = write!(
             out,
-            "\ntypedef struct {p}_object {{\n    uint64_t handle;\n}} {p}_object;\n\nstatic uniffi_lua_dispatcher {p}_dispatcher;\n\n/* Every call from Lua: remember the calling state, run queued callbacks. */\nstatic void {p}_enter(lua_State *L) {{\n    {p}_dispatcher.L = L;\n    uniffi_lua_service(&{p}_dispatcher);\n}}\n\n"
+            "\ntypedef struct {p}_object {{\n    uint64_t handle;\n}} {p}_object;\n\n/* Shared with the other modules of the Lua state (uniffi_lua_shared_dispatcher). */\nstatic uniffi_lua_dispatcher *{p}_shared_dispatcher;\n#define {p}_dispatcher (*{p}_shared_dispatcher)\n\n/* Every call from Lua: remember the calling state, run queued callbacks. */\nstatic void {p}_enter(lua_State *L) {{\n    {p}_dispatcher.L = L;\n    uniffi_lua_service(&{p}_dispatcher);\n}}\n\n"
         );
         out.push_str(&self.emit_buffers());
         let _ = write!(
@@ -201,7 +201,7 @@ impl Gen<'_> {
             );
         }
         format!(
-            "static int {p}_poll(lua_State *L) {{\n    {p}_enter(L);\n    return 0;\n}}\n\nint luaopen_{id}(lua_State *L);\n\nint luaopen_{id}(lua_State *L) {{\n    static bool loaded = false;\n    if (!loaded) {{\n{checks}        uniffi_lua_dispatcher_init(&{p}_dispatcher, L);\n        loaded = true;\n    }} else if ({p}_dispatcher.L != L && !uniffi_lua_on_owner(&{p}_dispatcher)) {{\n        return luaL_error(L, \"{ns}: the module serves one Lua state, on the thread that loaded it\");\n    }}\n    {p}_dispatcher.L = L;\n{error_register}    lua_newtable(L);\n{fns}    lua_pushcfunction(L, {p}_poll);\n    lua_setfield(L, -2, \"poll\");\n{register}    return 1;\n}}\n",
+            "static int {p}_poll(lua_State *L) {{\n    {p}_enter(L);\n    return 0;\n}}\n\nint luaopen_{id}(lua_State *L);\n\nint luaopen_{id}(lua_State *L) {{\n    static bool loaded = false;\n    if (!loaded) {{\n{checks}        {p}_shared_dispatcher = uniffi_lua_shared_dispatcher(L);\n        loaded = true;\n    }} else if ({p}_dispatcher.L != L && !uniffi_lua_on_owner(&{p}_dispatcher)) {{\n        return luaL_error(L, \"{ns}: the module serves one Lua state, on the thread that loaded it\");\n    }}\n    {p}_dispatcher.L = L;\n{error_register}    lua_newtable(L);\n{fns}    lua_pushcfunction(L, {p}_poll);\n    lua_setfield(L, -2, \"poll\");\n{register}    return 1;\n}}\n",
             id = ident(ns)
         )
     }

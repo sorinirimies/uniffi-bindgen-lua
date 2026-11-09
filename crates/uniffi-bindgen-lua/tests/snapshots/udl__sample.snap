@@ -192,7 +192,9 @@ typedef struct sample_object {
     uint64_t handle;
 } sample_object;
 
-static uniffi_lua_dispatcher sample_dispatcher;
+/* Shared with the other modules of the Lua state (uniffi_lua_shared_dispatcher). */
+static uniffi_lua_dispatcher *sample_shared_dispatcher;
+#define sample_dispatcher (*sample_shared_dispatcher)
 
 /* Every call from Lua: remember the calling state, run queued callbacks. */
 static void sample_enter(lua_State *L) {
@@ -1149,7 +1151,7 @@ int luaopen_sample(lua_State *L) {
             return luaL_error(L, "sample: API checksum mismatch, rebuild the module and the library together");
         }
         sample_Sink_init();
-        uniffi_lua_dispatcher_init(&sample_dispatcher, L);
+        sample_shared_dispatcher = uniffi_lua_shared_dispatcher(L);
         loaded = true;
     } else if (sample_dispatcher.L != L && !uniffi_lua_on_owner(&sample_dispatcher)) {
         return luaL_error(L, "sample: the module serves one Lua state, on the thread that loaded it");

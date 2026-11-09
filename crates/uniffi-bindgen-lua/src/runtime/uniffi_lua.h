@@ -193,6 +193,29 @@ static inline void uniffi_lua_dispatcher_init(uniffi_lua_dispatcher *d, lua_Stat
     d->owner = uniffi_current_thread();
 }
 
+/* Bump with any change to the dispatcher or job layout: modules built with another
+ * layout must not share one. */
+#define UNIFFI_LUA_DISPATCHER_KEY "uniffi_lua.dispatcher.v1"
+
+/** The dispatcher of `L`, shared by every module loaded into it: a call that waits in
+ *  one module (an async call, `poll()`) also runs the callbacks Rust makes into the
+ *  others, which would otherwise wait for a call into their own module and block the
+ *  Rust thread making them (a broker's auth callback during a client's connect).
+ *  Created by the first module; never freed, as Rust threads may still post to it
+ *  after the state is closed. */
+static inline uniffi_lua_dispatcher *uniffi_lua_shared_dispatcher(lua_State *L) {
+    lua_getfield(L, LUA_REGISTRYINDEX, UNIFFI_LUA_DISPATCHER_KEY);
+    uniffi_lua_dispatcher *d = (uniffi_lua_dispatcher *)lua_touserdata(L, -1);
+    lua_pop(L, 1);
+    if (d == NULL) {
+        d = (uniffi_lua_dispatcher *)uniffi_alloc(sizeof *d);
+        uniffi_lua_dispatcher_init(d, L);
+        lua_pushlightuserdata(L, d);
+        lua_setfield(L, LUA_REGISTRYINDEX, UNIFFI_LUA_DISPATCHER_KEY);
+    }
+    return d;
+}
+
 static inline bool uniffi_lua_on_owner(uniffi_lua_dispatcher *d) {
     return uniffi_same_thread(uniffi_current_thread(), d->owner);
 }

@@ -53,6 +53,13 @@ export def module_args [source: string, include: string, out_dir: string, lib_di
     [...(flags) ...$platform $"-I($out_dir)" $"-I($include)" $source $"-L($lib_dir)" $"-l($name)" $"-Wl,-rpath,($lib_dir)" "-o" $output]
 }
 
+# Arguments building the C file `source`, which uses only the runtime headers in
+# `runtime_dir` (no Rust library), into the Lua module `output`.
+export def runtime_module_args [source: string, include: string, runtime_dir: string, output: string, os: string] {
+    let platform = if $os == "macos" { ["-shared" "-undefined" "dynamic_lookup"] } else { ["-shared" "-fPIC" "-lpthread"] }
+    [...(flags) ...$platform $"-I($runtime_dir)" $"-I($include)" $source "-o" $output]
+}
+
 # The module file name: `<name>.so` (Lua's default cpath uses .so on macOS too).
 export def module_file [name: string] {
     $"($name).so"

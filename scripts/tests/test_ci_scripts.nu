@@ -261,6 +261,15 @@ def "test lua: modules are shared libraries, unresolved Lua symbols on macOS" []
     assert ("-Werror" in $linux)
 }
 
+def "test lua: runtime test modules use the runtime headers and no rust library" [] {
+    let args = (lua runtime_module_args "d.c" "/inc" "/rt" "/out/d.so" "linux")
+    assert ("-I/rt" in $args)
+    assert ("-I/inc" in $args)
+    assert ("-Werror" in $args)
+    assert ($args | all { |a| not ($a starts-with "-l") or $a == "-lpthread" })
+    assert ("dynamic_lookup" in (lua runtime_module_args "d.c" "/inc" "/rt" "/out/d.so" "macos"))
+}
+
 def "test lua: module file name" [] {
     assert equal (lua module_file "tour") "tour.so"
 }
