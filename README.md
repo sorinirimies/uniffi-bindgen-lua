@@ -5,7 +5,7 @@
 [![Fuzz](https://github.com/sorinirimies/uniffi-bindgen-lua/actions/workflows/fuzz.yml/badge.svg)](https://github.com/sorinirimies/uniffi-bindgen-lua/actions/workflows/fuzz.yml)
 [![crates.io](https://img.shields.io/crates/v/uniffi-bindgen-lua.svg)](https://crates.io/crates/uniffi-bindgen-lua)
 
-Lua bindings generator for [UniFFI](https://mozilla.github.io/uniffi-rs/) 0.32.
+Lua bindings generator for [UniFFI](https://mozilla.github.io/uniffi-rs/) 0.33.
 
 Point it at a library built with UniFFI and it writes, per component, the C source of a
 Lua module on the Lua C API. Build it into a shared library with the Rust library linked
@@ -30,6 +30,7 @@ cargo install uniffi-bindgen-lua
 
 | uniffi-bindgen-lua | UniFFI | Lua |
 |---|---|---|
+| 0.2 | 0.33 | 5.1 (LuaJIT) – 5.5 |
 | 0.1 | 0.32 | 5.1 (LuaJIT) – 5.5 |
 
 Use the release that matches the `uniffi` version of the Rust library (a library built
@@ -127,7 +128,7 @@ just check-all    # fmt, clippy, tests, docs, Nushell script tests
 just e2e          # build the tour fixture's module for every Lua found and run its test
 just fixtures     # uniffi's fixture suite: generate, build, require (--only <lib>)
 just fuzz-lua     # fuzz the generated converters
-just vendor-fixtures ~/uniffi-rs v0.32.2
+just vendor-fixtures ~/uniffi-rs v0.33.0
 just release-all 0.1.0
 ```
 

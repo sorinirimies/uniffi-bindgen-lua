@@ -178,7 +178,7 @@ static inline void uniffi_status_ok(uniffi_status *status) {
 }
 
 /* ------------------------------------------------------------------------- */
-/* The FFI types of the UniFFI scaffolding (uniffi 0.32).                     */
+/* The FFI types of the UniFFI scaffolding (uniffi 0.33).                     */
 /* ------------------------------------------------------------------------- */
 
 typedef struct RustBuffer {

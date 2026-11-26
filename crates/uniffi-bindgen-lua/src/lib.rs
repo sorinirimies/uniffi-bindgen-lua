@@ -11,6 +11,7 @@
 //! Build `<namespace>.c` into a shared library named after the namespace, linking
 //! the Rust library, and `require` it from Lua.
 
+pub mod bindgen;
 mod cli;
 mod codegen;
 mod config;

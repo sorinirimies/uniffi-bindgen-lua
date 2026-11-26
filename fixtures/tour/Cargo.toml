@@ -12,7 +12,7 @@ crate-type = ["cdylib", "staticlib"]
 name = "tour"
 
 [dependencies]
-uniffi = { version = "0.32", features = ["tokio"] }
+uniffi = { version = "0.33", features = ["tokio"] }
 tokio = { version = "1", features = ["time", "rt-multi-thread"] }
 thiserror = "2"
 async-trait = "0.1"

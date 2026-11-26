@@ -33,6 +33,9 @@ path = "../uniffi-one"
 [dependencies.uniffi-fixture-ext-types-custom-types]
 path = "../custom-types"
 
+[dependencies.uniffi-fixture-ext-types-external-crate]
+path = "../external-crate"
+
 [dependencies.uniffi-example-custom-types]
 path = "../../examples/custom-types"
 

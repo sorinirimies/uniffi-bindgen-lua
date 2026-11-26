@@ -61,7 +61,7 @@ fixtures *args:
 fuzz-lua *args:
     nu scripts/ci/fuzz_lua.nu {{ args }}
 
-# Re-vendor uniffi's fixtures from a uniffi-rs checkout at a tag (e.g. v0.32.2)
+# Re-vendor uniffi's fixtures from a uniffi-rs checkout at a tag (e.g. v0.33.0)
 vendor-fixtures repo tag:
     nu scripts/vendor_fixtures.nu {{ repo }} {{ tag }}
 

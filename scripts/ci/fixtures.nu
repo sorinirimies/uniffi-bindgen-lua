@@ -18,6 +18,9 @@ const FIXTURES = "fixtures/uniffi"
 export const SKIP = [
     # Its UDL lives in another crate, so library mode cannot find the UDL types.
     "uniffi_proc_macro_nip"
+    # They export no UniFFI items: only types that other crates use externally.
+    "ext_types_external_crate"
+    "uniffi_fixture_regression_cdylib_dependency"
 ]
 
 # The cdylib targets in `cargo metadata` output: name and package directory.

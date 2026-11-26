@@ -15,6 +15,7 @@ const TARGET = "fixtures/uniffi"
 # Upstream crates that are not binding tests, or test only another language
 # or target.
 const SKIP = [
+    "fixtures/benchmarks"
     "examples/app/uniffi-bindgen-cli"
     "fixtures/metadata"
     "fixtures/multi-arch-extract"

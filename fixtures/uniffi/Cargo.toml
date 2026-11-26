@@ -1,11 +1,11 @@
-# uniffi-rs v0.32.2 test fixtures and examples (MPL-2.0,
-# https://github.com/mozilla/uniffi-rs/tree/v0.32.2),
-# vendored by scripts/vendor_fixtures.nu to run their tests against the C
-# bindings. Each fixture's `c/test_*.c` ports the upstream test named at
+# uniffi-rs v0.33.0 test fixtures and examples (MPL-2.0,
+# https://github.com/mozilla/uniffi-rs/tree/v0.33.0),
+# vendored by scripts/vendor_fixtures.nu to run their tests against the Lua
+# bindings. Each fixture's `lua/test_*.lua` ports the upstream test named at
 # its top. Changes from upstream: the test harness and the per-language
 # tests, dev-dependencies, the ffi-trace feature, benches and binaries are
 # removed.
-# Kept from an earlier uniffi-rs version (no longer upstream): keywords/kotlin, keywords/swift, regressions/kotlin-enum-payload-clash, regressions/kotlin-experimental-unsigned-types, regressions/swift-callbacks-omit-labels, regressions/swift-dictionary-nesting.
+# Kept from an earlier uniffi-rs version (no longer upstream): benchmarks, keywords/kotlin, keywords/swift, regressions/kotlin-enum-payload-clash, regressions/kotlin-experimental-unsigned-types, regressions/swift-callbacks-omit-labels, regressions/swift-dictionary-nesting.
 [workspace]
 resolver = "2"
 members = [
@@ -67,4 +67,4 @@ members = [
 ]
 
 [workspace.dependencies]
-uniffi = "=0.32.2"
+uniffi = "=0.33.0"

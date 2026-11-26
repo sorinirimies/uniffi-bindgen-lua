@@ -24,3 +24,11 @@ impl ExternalCrateInterface {
         self.sval.clone()
     }
 }
+
+pub enum ExternalCrateEnumInterface {
+    Whatever,
+}
+
+pub trait ExternalCrateTrait: Send + Sync {
+    fn hello(&self) -> String;
+}

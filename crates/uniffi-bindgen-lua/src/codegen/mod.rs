@@ -12,7 +12,9 @@ use std::collections::{BTreeSet, HashMap};
 
 use anyhow::{Context, Result};
 use camino::Utf8Path;
-use uniffi_bindgen::{BindingGenerator, Component, ComponentInterface, GenerationSettings};
+use uniffi_bindgen::{Component, ComponentInterface};
+
+use crate::bindgen::{BindingGenerator, GenerationSettings};
 
 use crate::config::Config;
 use types::Gen;

@@ -3,7 +3,6 @@
 use anyhow::{Context, Result, bail};
 use camino::Utf8PathBuf;
 use clap::{Parser, Subcommand};
-use uniffi_bindgen::cargo_metadata::CrateConfigSupplier;
 
 use crate::codegen::{LuaBindingGenerator, write_runtime};
 
@@ -90,26 +89,33 @@ fn generate(
     format: bool,
     metadata_no_deps: bool,
 ) -> Result<()> {
-    let generator = LuaBindingGenerator;
-    if uniffi_bindgen::is_cdylib(source) {
-        let out_dir = out_dir.context("--out-dir is required when generating from a library")?;
-        let supplier = CrateConfigSupplier::from_cargo_metadata_command(metadata_no_deps)?;
-        uniffi_bindgen::library_mode::generate_bindings(
-            source, crate_name, &generator, &supplier, config, &out_dir, format,
-        )?;
-        return Ok(());
-    }
-    if source.extension() != Some("udl") {
+    // A library carries the definitions of a UDL file too, so with one given
+    // the library is the source.
+    let source = match library {
+        Some(library) if source.extension() == Some("udl") => library,
+        _ => source,
+    };
+    if source.extension() != Some("udl") && !uniffi_bindgen::is_cdylib(source) {
         bail!("`{source}` is neither a library nor a .udl file");
     }
-    uniffi_bindgen::generate_external_bindings(
-        &generator,
-        source,
-        config,
-        out_dir.as_deref(),
-        library,
-        crate_name.as_deref(),
-        format,
+    let out_dir = match out_dir {
+        Some(dir) => dir,
+        None if source.extension() == Some("udl") => source
+            .parent()
+            .map(camino::Utf8Path::to_path_buf)
+            .context("--out-dir is required")?,
+        None => bail!("--out-dir is required when generating from a library"),
+    };
+    crate::bindgen::generate(
+        &LuaBindingGenerator,
+        &crate::bindgen::GenerateRequest {
+            source,
+            out_dir: &out_dir,
+            config,
+            crate_filter: crate_name.as_deref(),
+            format,
+            metadata_no_deps,
+        },
     )
 }
 
