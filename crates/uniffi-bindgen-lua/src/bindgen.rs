@@ -79,10 +79,10 @@ pub fn generate<G: BindingGenerator>(generator: &G, request: &GenerateRequest<'_
     let loader = BindgenLoader::new(paths, global_config);
 
     let metadata = loader.load_metadata(request.source)?;
-    if let Some(filter) = request.crate_filter {
-        if !metadata.contains_key(filter) {
-            bail!("no UniFFI metadata found for crate {filter}");
-        }
+    if let Some(filter) = request.crate_filter
+        && !metadata.contains_key(filter)
+    {
+        bail!("no UniFFI metadata found for crate {filter}");
     }
     let cis = loader.load_cis(request.source, metadata)?;
     let mut components = loader.load_components(cis, |_, toml| generator.new_config(&toml))?;
